@@ -1,4 +1,5 @@
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -31,13 +32,31 @@ public class Coder {
 		     }
 		     writer.append('\n');
 		  }
+			writer.flush();
+			writer.close();
 		}
 		catch(Exception e)
 		{
 		  e.printStackTrace();
 		}
 	}
-	
+	private static void generate_and_save(int count, int per_row){
+		try {
+			FileWriter writer = new FileWriter("codes.csv");
+			for(int i = 0;i<count;i++){
+				writer.append(RandomStringUtils.randomAlphanumeric(10));
+				if(i%per_row == 0)
+					writer.append('\n');
+				else
+					writer.append(',');
+			}
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * @param args
 	 */
@@ -59,7 +78,8 @@ public class Coder {
 		}catch (NumberFormatException  e) {
 			e.printStackTrace();
 		}
-		generate(count);
-		write_to_csv(per_row);
+		//generate(count);
+		//write_to_csv(per_row);
+		generate_and_save(count, per_row);
 	}
 }
